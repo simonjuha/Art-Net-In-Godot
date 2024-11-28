@@ -40,21 +40,16 @@ func update_dmx_data(package: PackedByteArray):
 	# ToDo: Check for universe
 
 	# check frame/sequence
-	#if package[12] != dmx_frame or dmx_frame == null:
 	var new_dmx_frame = package[12]
-	if new_dmx_frame > dmx_frame or dmx_frame == null or ( dmx_frame > new_dmx_frame and new_dmx_frame < 128):
+	if (dmx_frame == null) or (new_dmx_frame > dmx_frame) or (dmx_frame > new_dmx_frame and new_dmx_frame < 128):
 		dmx_frame = new_dmx_frame
 	else:
 		return
-
-	print("Frame: ", dmx_frame)
+	print("frame: " + str(dmx_frame))
 	
 	for i in range(512):
 		dmx_data[i] = package[ i + 18]
-	emit_signal("dmx_updated")
+	emit_signal("dmx_updated", dmx_data)
 
 func get_dmx_data(channel: int) -> int:
-	return dmx_data[channel - 1]
-
-func print_dmx_ch_1():
-	print(get_dmx_data(512))
+	return dmx_data[channel]
