@@ -38,11 +38,10 @@ func process_dmx(dmx: Array):
 	light_source.light_color.g = dmx[MacAura.BEAM_GREEN] / 255.0
 	light_source.light_color.b = dmx[MacAura.BEAM_BLUE] / 255.0
 	light_source.light_energy = dmx[MacAura.BEAM_DIMMER] / 64.0
-	light_source.spot_angle = dmx[MacAura.ZOOM] / 255.0 * 90.0
-	light_source.rotation_degrees.y = dmx[MacAura.PAN] / 255.0 * 360.0
-	light_source.rotation_degrees.x = dmx[MacAura.TILT] / 255.0 * 180.0
-	pass
-
+	light_source.spot_angle = 15.0 + (dmx[MacAura.ZOOM] / 255.0 * 90.0)
+	# combining course and fine (MSB LSB)
+	light_source.rotation_degrees.y = (dmx[MacAura.PAN] * 256 + dmx[MacAura.PAN_FINE]) / 65535.0 * 360.0
+	light_source.rotation_degrees.x = (dmx[MacAura.TILT] * 256 + dmx[MacAura.TILT_FINE]) / 65535.0 * 360.0
 
 
 
