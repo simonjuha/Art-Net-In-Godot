@@ -1,4 +1,5 @@
 extends Node
+class_name ArtNet
 
 var udp_socket: PacketPeerUDP
 @export var listening_port: int = 6454
@@ -21,6 +22,11 @@ func _ready():
 		var result2 = udp_socket.set_dest_address("255.255.255.255", 6454)
 		if result2 != OK:
 			push_error("Failed to set destination address")
+	
+	# add fixtures to the universe
+	for fixture in get_tree().get_nodes_in_group("dmx_fixtures"):
+		fixture.add_to_dmx_universe(self)
+
 
 func _process(_delta):
 	if udp_socket.get_available_packet_count() > 0:
@@ -45,7 +51,6 @@ func update_dmx_data(package: PackedByteArray):
 		dmx_frame = new_dmx_frame
 	else:
 		return
-	print("frame: " + str(dmx_frame))
 	
 	for i in range(512):
 		dmx_data[i] = package[ i + 18]
