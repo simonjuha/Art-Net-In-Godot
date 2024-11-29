@@ -31,8 +31,7 @@ enum MacAura {
 
 func _ready():
 	light_source = $Light3D
-	set_fixture_channels(0, MacAura.size())
-
+	set_fixture_channels(MacAura.size())
 
 func process_dmx(dmx: Array):
 	light_source.light_color.r = dmx[MacAura.BEAM_RED] / 255.0
@@ -42,8 +41,6 @@ func process_dmx(dmx: Array):
 	light_source.spot_angle = dmx[MacAura.ZOOM] / 255.0 * 90.0
 	light_source.rotation_degrees.y = dmx[MacAura.PAN] / 255.0 * 360.0
 	light_source.rotation_degrees.x = dmx[MacAura.TILT] / 255.0 * 180.0
-
-
 	pass
 
 

@@ -26,6 +26,7 @@ func _ready():
 	# add fixtures to the universe
 	for fixture in get_tree().get_nodes_in_group("dmx_fixtures"):
 		fixture.add_to_dmx_universe(self)
+		print("Added fixture to universe")
 
 
 func _process(_delta):
