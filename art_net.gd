@@ -18,16 +18,16 @@ func _ready():
 	if result != OK:
 		push_error("Failed to open UDP socket on port %d" % listening_port)
 	else:
-		udp_socket.set_broadcast_enabled(true)
-		var result2 = udp_socket.set_dest_address("255.255.255.255", 6454)
-		if result2 != OK:
-			push_error("Failed to set destination address")
+		var ip_address
+		for a in IP.get_local_addresses():
+			if (a.split('.').size() == 4):
+				ip_address = a
+		print("Listening on: ", ip_address, ":", udp_socket.get_local_port())
 	
 	# add fixtures to the universe
 	for fixture in get_tree().get_nodes_in_group("dmx_fixtures"):
 		fixture.add_to_dmx_universe(self)
 		print("Added fixture to universe")
-
 
 func _process(_delta):
 	if udp_socket.get_available_packet_count() > 0:
