@@ -3,6 +3,7 @@ class_name ArtNet
 
 var udp_socket: PacketPeerUDP
 @export var listening_port: int = 6454
+@export var DMX_universe: int = 0
 var dmx_data: Array = Array()  # Initialize an empty array
 
 var dmx_frame = null
@@ -44,7 +45,10 @@ func update_dmx_data(package: PackedByteArray):
 	if opcode != 0x5000:
 		return
 		
-	# ToDo: Check for universe
+	# Check for universe
+	var universe = package.decode_u16(14)
+	if universe != DMX_universe:
+		return
 
 	# check frame/sequence
 	var new_dmx_frame = package[12]
