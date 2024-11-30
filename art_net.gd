@@ -2,7 +2,12 @@ extends Node
 class_name ArtNet
 
 var udp_socket: PacketPeerUDP
-@export var listening_port: int = 6454
+@export var listening_port: int = 6454:
+	set(value):
+		if udp_socket:
+			push_error("Cannot change listening port after the socket has been initialized")
+		else:
+			listening_port = value
 @export var DMX_universe: int = 0
 var dmx_data: Array = Array()  # Initialize an empty array
 
