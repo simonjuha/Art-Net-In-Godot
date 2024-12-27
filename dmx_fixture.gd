@@ -1,3 +1,4 @@
+@icon("res://editor/icons/fixture.svg")
 extends Node
 class_name DMXFixture
 ## A DMX fixture that contains multiple DMX functions (DMXLightFunction)

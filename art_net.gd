@@ -1,3 +1,4 @@
+@icon("res://editor/icons/artnet.svg")
 extends Node
 class_name ArtNet
 ## Art-Net Node

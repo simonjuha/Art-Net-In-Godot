@@ -1,3 +1,4 @@
+@icon("res://editor/icons/dmx_channel.svg")
 extends Node
 class_name DMXFunction
 ## Base class for DMX functions
