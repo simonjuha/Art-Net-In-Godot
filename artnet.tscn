@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5vhs3qhp45ir"]
+
+[ext_resource type="Script" path="res://art_net.gd" id="1_0s66b"]
+
+[node name="ArtNet" type="Node"]
+script = ExtResource("1_0s66b")
