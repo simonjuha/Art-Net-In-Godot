@@ -1,8 +1,25 @@
-# Art-Net simulation in Godot
-I was wondering if Godot would be a nice tool for simulating DMX lighting, so i made some script for this prupose.
-use connect on an _ArtNet_ instance to get updated DMX frames. All _DmxFixture_ in a scene is automaticly added to the _ArtNet_ class through a group called 'dmx_fixtures'
-## How to use
-TO create a new dmx fixture type, create a script the extends the _DmxFixture_ class. call the method _set_fixture_channels(n_channels)_, where _channels are the number of dmx channels that the faxture takes up. Each node _DmxFixture_ has an export property "DMX channel offset" tha tshould be set to the wanted channel offset. A example of how a light source can be controlled can be found in the "dmx_fixtures" folder.
-Make sure that a node using the _ArtNet_ script is in your scene since this is the script that receives Art-Net packages and emits the signal _dmx_updated_ when DMX changes.
+# Art-Net Simulation in Godot
+I wondered whether Godot could be a suitable tool for simulating DMX lighting, so I created a script for this purpose. 
+
+You can connect to an _ArtNet_ instance and use the `_dmx_updated` signal to receive updated DMX frames. All _DMXFixture_ nodes in a scene are automatically added to the _ArtNet_ class through a group called `dmx_fixtures`.
+
+## How to Use
+
+1. **Creating a New DMX Fixture Type**  
+   To create a new DMX fixture type, follow these steps:  
+   - Create a node that uses the _DMXFixture_ script/class.  
+   - Add a light source (_Light3D_) and subclasses of _DMXFunction_.  
+   
+   The _DMXFunction_ nodes act as channels for the fixture, controlling properties like intensity, RGB, tilt/pan, etc. These channels are added to the control in the order the nodes are placed inside the _DMXFixture_.
+
+2. **Setting DMX Channel Offset**  
+   Each _DMXFixture_ node has an exported property called "DMX Channel Offset." This property should be set to the desired channel offset.  
+
+3. **Example Scene**  
+   An example of how a light source can be controlled is provided in the "example_scene.tscn"
+
+4. **Adding the ArtNet Node**  
+   Ensure that a node using the _ArtNet_ script is present in your scene (preferably at the bottom of your scene tree). This script receives Art-Net packets and emits the `_dmx_updated` signal when DMX data changes.
+   
 ## Network
-Whatever softare you are using this script should work with both broadcast and unicast.
+This script should work with any software supporting Art-Net, whether using broadcast or unicast.
