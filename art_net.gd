@@ -30,6 +30,11 @@ func _ready():
 				ip_address = a
 		print("Listening on: ", ip_address, ":", udp_socket.get_local_port())
 	
+	#check if group is empty
+	if get_tree().has_group("dmx_fixtures") == false:
+		push_error("No fixtures found in the scene")
+		return
+
 	# add fixtures to the universe
 	for fixture in get_tree().get_nodes_in_group("dmx_fixtures"):
 		fixture.add_to_dmx_universe(self)

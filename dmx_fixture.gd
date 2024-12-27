@@ -1,29 +1,30 @@
-extends Node3D
-class_name DmxFixture
+extends Node
+class_name DMXFixture
 
-@export var dmx_channel_offset: int = 0		# DMX channel offset
-
-var local_dmx_data: Array 					# local data kept in lamp
-var total_channels: int = 0					# total number of channels - increases with each added channel
-
-func set_fixture_channels(channel_count: int) -> void:
-	total_channels = channel_count + 1
+@export var dmx_channel_offset: int = 0
+var channels: Array[DMXFunction] = []
+func _ready():
 	add_to_group("dmx_fixtures")
+	var light_source: Light3D = null
+	for child in get_children():
+		if child is Light3D:
+			light_source = child
+			break
+	
+	for child in get_children():
+		if child is DMXLightFunction:
+			child.set_light_source(light_source)
+		if child is DMXFunction:
+			child.channel_index = channels.size() + dmx_channel_offset
+			for j in range(child.channel_size):
+				channels.append(child)
+
+func process_dmx(dmx_data_array: Array) -> void:
+	for i in range(channels.size()):
+		channels[i].process_dmx(dmx_data_array)
 	pass
 
 func add_to_dmx_universe(artnet: ArtNet):
-	artnet.connect("dmx_updated", Callable(self, "_check_dmx"))
+	print("Adding to DMX universe")
+	artnet.connect("dmx_updated", Callable(self, "process_dmx"))
 	pass
-
-func _check_dmx(dmx_data_array: Array) -> void:
-# se if local data is different from the new data
-	var temp_local_dmx_data = dmx_data_array.slice(dmx_channel_offset, total_channels + dmx_channel_offset)
-	if temp_local_dmx_data != local_dmx_data:
-		local_dmx_data = temp_local_dmx_data
-		# process the data
-		process_dmx(local_dmx_data)
-
-# This function should be overridden in the derived class, processing dmx property names and values
-func process_dmx(dmx: Array):
-	push_error("The 'process_dmx' must be overridden in the derived class!") # Replace with function body.
-pass
