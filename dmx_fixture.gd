@@ -1,5 +1,7 @@
 extends Node
 class_name DMXFixture
+## A DMX fixture that contains multiple DMX functions (DMXLightFunction)
+## DMXLightFunction nodes added as children will be processed by the fixture
 
 @export var dmx_channel_offset: int = 0
 var channels: Array[DMXFunction] = []

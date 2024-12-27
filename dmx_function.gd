@@ -1,5 +1,7 @@
 extends Node
 class_name DMXFunction
+## Base class for DMX functions
+## This class should be extended to create custom DMX functions
 
 var channel_size: int = 1
 var channel_index: int = 0

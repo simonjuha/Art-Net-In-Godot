@@ -1,5 +1,9 @@
 extends Node
 class_name ArtNet
+## Art-Net Node
+## This node is responsible for receiving Art-Net packages and updating the DMX data array
+## DMX data is passed to the fixtures that are added to the "dmx_fixtures" group
+## This node should be added to the root of the scene (bottom of the scene tree) to ensure that all fixtures are added to the universe
 
 var udp_socket: PacketPeerUDP
 @export var listening_port: int = 6454:

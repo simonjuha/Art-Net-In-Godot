@@ -1,5 +1,6 @@
 extends DMXLightFunction
 class_name DMXLightRGBColor
+## A simple RGB light function that sets the color of a light source based on the DMX data
 
 func _ready() -> void:
 	channel_size = 3

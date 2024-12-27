@@ -1,5 +1,6 @@
 extends DMXFunction
 class_name DMXLightFunction
+## Base class for DMX light-based functions
 
 var light_source: Light3D
 
